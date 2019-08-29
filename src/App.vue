@@ -37,6 +37,18 @@
       </sui-accordion>
 
       <sui-form-field>
+        <label>Alamat:</label>
+        <sui-dropdown
+    fluid
+    multiple
+    :options="skills"
+    placeholder="Pilih Provinsi"
+    selection
+    v-model="current"
+  />
+      </sui-form-field>
+
+      <sui-form-field>
         <sui-checkbox label="I agree to the Terms and Conditions" />
       </sui-form-field>
       <sui-button type="submit">Submit</sui-button>
@@ -46,15 +58,38 @@
 </template>
 
 <script>
+import Axios from "axios";
+const BASE_URL = "https://fast-training-center.firebaseapp.com";
 export default {
   name: "FormExample",
   data() {
     return {
-      jumlah: 1
-    }
+      jumlah: 1,
+      wilayahIndonesia: null,
+      alamat: {
+        provinsi: ""
+      }
+    };
   },
-  mounted(){
-    alert('hohohow')
+  mounted() {
+    // load wilayah indonesia
+    Axios.post(BASE_URL + "/wilayah-indonesia").then(r => {
+      this.wilayahIndonesia = r.data;
+    });
+  },
+  computed: {
+    getAllProvinsi() {
+      return [
+        {
+          text: "Male",
+          value: 1
+        },
+        {
+          text: "Female",
+          value: 2
+        }
+      ];
+    }
   }
 };
 </script>
