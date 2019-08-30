@@ -83,8 +83,8 @@
           <label>Keterangan: Harga <b>Rp 125.000</b>, FREE ONGKIR</label>
         </div>
 
-        <sui-button v-if="!submitting" @click="submit" primary type="button">Submit Pre Order</sui-button>
-        <img v-else src="https://loading.io/spinners/rolling/lg.curve-bars-loading-indicator.gif" style="height:50px" />
+        <sui-button v-show="!submitting" @click="submit" primary type="button">Submit Pre Order</sui-button>
+        <img v-show="submitting" src="https://loading.io/spinners/rolling/lg.curve-bars-loading-indicator.gif" style="height:50px" />
       </sui-form>
 
       <sui-form v-else>
