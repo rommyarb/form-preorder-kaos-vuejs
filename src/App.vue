@@ -9,8 +9,8 @@
       <br /><br />
       <sui-form v-if="!submit_success">
         <sui-form-field>
-          <label>Nama</label>
-          <input name="namapemesan" placeholder="Nama Anda" v-model="form.nama">
+          <label>Nama Pemesan</label>
+          <input name="namapemesan" placeholder="Nama Pemesan (Anda)" v-model="form.nama">
         </sui-form-field>
 
         <sui-form-field>
@@ -72,7 +72,7 @@
           <input v-if="alamat.kecamatan!==null" name="kodepos" placeholder="Kode Pos" v-model="form.alamat.kode_pos"
             type="number">
 
-          <textarea v-if="form.alamat.kode_pos.length>4" name="alamat" rows="4"
+          <textarea v-if="alamat.kecamatan!==null" name="alamat" rows="4"
             placeholder="Detail Alamat (isi dengan nama jalan, nomor rumah, nomor kompleks, nama gedung, lantai atau nomor unit)"
             v-model="form.alamat.detail"></textarea>
 
@@ -84,15 +84,22 @@
         </div>
 
         <sui-button v-show="!submitting" @click="submit" primary type="button">Submit Pre Order</sui-button>
-        <img v-show="submitting" src="https://loading.io/spinners/rolling/lg.curve-bars-loading-indicator.gif" style="height:50px" />
+        <img v-show="submitting" src="https://loading.io/spinners/rolling/lg.curve-bars-loading-indicator.gif"
+          style="height:50px" />
       </sui-form>
 
       <sui-form v-else>
         <h2 is="sui-header" style="color:green">SUCCESS!</h2>
 
-        <p>Silahkan transfer sebesar {{formatRupiah(125000*this.form.kaos_.length)}}<br>ke rekening Bank Muamalat
+        <p>Silahkan transfer sebesar <b>{{formatRupiah(125000*this.form.kaos_.length)}}</b><br>ke rekening Bank Muamalat
           <b>3280010758</b>
           a.n. <b>M. Nanda</b></p>
+        <p>
+          Kemudian konfirmasi pembayaran:
+        </p>
+        <div style="text-align:center">
+          <sui-button positive content="Konfirmasi Pembayaran" icon="whatsapp" @click="konfirmasiPembayaran" />
+        </div>
       </sui-form>
     </sui-segment>
   </div>
@@ -200,6 +207,11 @@
       }
     },
     methods: {
+      konfirmasiPembayaran(e) {
+        window.location.href =
+          "https://wa.me/6281398532737?text=Nama%20Pemesan%3A%0A%0ADari%20Bank%3A%0A%0ANama%20Pengirim%20(a.n.%20rekening)%3A%0A%0ANominal%3A%20Rp%20"
+        e.preventDefault()
+      },
       formatRupiah(angka) {
         var rupiah = '';
         var angkarev = angka.toString().split('').reverse().join('');
